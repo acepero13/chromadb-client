@@ -2,6 +2,7 @@ package com.acepero13.chromadb.client.utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,18 @@ class ListUtilsTest {
 
         assertEquals(List.of(List.of(1, 5, 6)), result);
 
+    }
+
+    @Test void testAllHaveSameLength(){
+        assertTrue(ListUtils.allHaveSameLength(List.of(1, 2), List.of(3,4)));
+    }
+
+    @Test void testOneArrayIsSmaller(){
+        assertFalse(ListUtils.allHaveSameLength(List.of(1, 2), List.of(3)));
+    }
+
+    @Test void testNull(){
+        assertTrue(ListUtils.allHaveSameLength());
     }
 
     @Test void testFlatten(){

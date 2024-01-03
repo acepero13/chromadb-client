@@ -24,14 +24,9 @@ final class CreateEmbeddingResponse {
         return new Gson().fromJson(json, CreateEmbeddingResponse.class);
     }
 
-    // Getter and setter methods
 
     public List<DataItem> getData() {
         return data;
-    }
-
-    public void setData(List<DataItem> data) {
-        this.data = data;
     }
 
     public String getModel() {

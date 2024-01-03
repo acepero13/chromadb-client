@@ -1,17 +1,12 @@
 package com.acepero13.chromadb.client.model;
 
-import com.acepero13.chromadb.client.embeddings.minilm.TextEmbedding;
+import com.acepero13.chromadb.client.handler.ApiException;
+import com.acepero13.chromadb.client.handler.DefaultApi;
 import com.acepero13.chromadb.client.model.query.criteria.*;
 import com.acepero13.chromadb.client.result.GetResult;
 import com.acepero13.chromadb.client.result.QueryResponse;
 import com.acepero13.chromadb.client.result.QueryResult;
 import com.acepero13.chromadb.client.utils.IdGenerator;
-import com.acepero13.chromadb.client.handler.ApiException;
-import com.acepero13.chromadb.client.handler.DefaultApi;
-import com.acepero13.chromadb.client.model.AddEmbedding;
-import com.acepero13.chromadb.client.model.CreateCollection;
-import com.acepero13.chromadb.client.model.GetEmbedding;
-import com.acepero13.chromadb.client.model.QueryEmbedding;
 
 import java.util.ArrayList;
 import java.util.Collections;

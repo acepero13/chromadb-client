@@ -20,7 +20,7 @@ public class GetResult {
     private List<Map<String, Object>> metadatas;
 
     public Documents getDocuments() {
-        return new Documents(documents);
+        return Documents.of(documents);
     }
 
     public List<Float> getEmbeddings() {

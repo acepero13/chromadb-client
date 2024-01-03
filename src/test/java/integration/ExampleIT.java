@@ -1,6 +1,7 @@
 package integration;
 
 import com.acepero13.chromadb.client.DbClient;
+import com.acepero13.chromadb.client.embeddings.minilm.TextEmbedding;
 import com.acepero13.chromadb.client.handler.ApiException;
 import com.acepero13.chromadb.client.model.Collection;
 import com.acepero13.chromadb.client.model.CollectionName;
@@ -54,7 +55,7 @@ public class ExampleIT {
 
     @Test void testMain() throws ApiException {
         DbClient client = DbClient.create(url);
-        Collection collection = client.createCollection(Collection.CreateParams.create(CollectionName.of("test-collection")));
+        Collection collection = client.createCollection("test-collection");
 
         collection.add(List.of("1", "2"), AddCriteria.builder()
                         .withDocuments("Hello, my name is John. I am a Data Scientist.", "Hello, my name is Bond. I am a Spy.")
@@ -65,5 +66,22 @@ public class ExampleIT {
 
         assertTrue(response.isSuccess());
         assertEquals("2", response.payload().orElseThrow().getIds().get(0).get(0));
+    }
+
+
+
+    @Test void testPotentialExample() throws ApiException {
+        DbClient client = DbClient.create(url);
+        Collection collection = client.createCollection(CollectionName.of("qa-collection"));
+
+        collection.add(List.of("1", "2"), AddCriteria.builder()
+                .withDocuments("The user's current location is Paris", "The user's name is Alberto Durero")
+                .withMetadata(Metadata.of("type", "location"), Metadata.of("type", "name"))
+                .build());
+
+        QueryResponse<QueryResult> response = collection.query("What can I Do here?");
+
+        assertTrue(response.isSuccess());
+        assertEquals("1", response.payload().orElseThrow().getIds().get(0).get(0));
     }
 }

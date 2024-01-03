@@ -51,12 +51,16 @@ class AddCriteriaTest {
     @Test
     void testMetadata() {
         AddCriteria actualRequest = AddCriteria.builder()
-                .withMetadata(Metadata.single("key", "value"))
+                .withMetadata(Metadata.of("key", "value"))
                 .build();
 
         assertEquals(List.of(Map.of("key", "value")), actualRequest.metadata());
 
 
+    }
+
+    @Test void testGenerator(){
+        assertNull(AddCriteria.builder().build().getIdGenerator());
     }
 
     @Test
@@ -101,7 +105,7 @@ class AddCriteriaTest {
     void testInvalidRequestIdsDifferentLengthAsDocsAndEmbeedings() {
         AddCriteria actualRequest = AddCriteria.builder()
                 .withEmbeddings(1.0f, 2.0f, 3.0f)
-                .withDocuments(Documents.single("Text"))
+                .withDocuments("Text")
                 .build();
 
         Throwable error = assertThrows(RequestValidationException.class, () -> actualRequest.toRequest(IDS, FAKE_FUNCTION));

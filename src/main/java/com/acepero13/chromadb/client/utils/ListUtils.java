@@ -16,12 +16,10 @@ public class ListUtils {
     }
 
     public static boolean allHaveSameLength(List<?>... lists) {
-        // Check for null or empty input
         if (lists == null || lists.length == 0) {
-            return true; // or throw an exception, based on your requirement
+            return true;
         }
 
-        // Using Java Streams to check if all lists have the same length
         return Arrays.stream(lists)
                 .filter(Objects::nonNull)
                 .map(List::size)

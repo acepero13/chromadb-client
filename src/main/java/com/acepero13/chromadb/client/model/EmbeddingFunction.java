@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public interface EmbeddingFunction {
 
-    static final TextEmbedding TEXT_EMBEDDING = new TextEmbedding();
+    TextEmbedding TEXT_EMBEDDING = new TextEmbedding();
 
     static EmbeddingFunction defaultFunction() {
         return TEXT_EMBEDDING;

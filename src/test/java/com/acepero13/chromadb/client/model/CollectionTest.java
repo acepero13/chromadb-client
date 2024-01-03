@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.testcontainers.shaded.org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -445,6 +446,26 @@ class CollectionTest {
         verify(mockApi).get(expected, COLLECTION_ID);
 
         assertTrue(actual.payload().isEmpty());
+    }
+
+    @Test void testCreate(){
+        CreateCollection request = Collection.CreateParams.create("name").request();
+
+        assertEquals(createDefaultCollection("name"), request);
+    }
+
+    @Test void testCreateWithName(){
+        CreateCollection request = Collection.CreateParams.create(CollectionName.of("anotherName")).request();
+
+        assertEquals(createDefaultCollection("anotherName"), request);
+    }
+
+    private CreateCollection createDefaultCollection(String name) {
+        return new CreateCollection()
+                .getOrCreate(true)
+                .name(name)
+                .metadata(Map.of("client", "java-client"))
+                ;
     }
 
 }

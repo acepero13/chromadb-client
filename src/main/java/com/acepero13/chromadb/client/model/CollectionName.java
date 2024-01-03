@@ -10,6 +10,17 @@ public class CollectionName {
         this.name = name;
     }
 
+
+    /**
+     * Creates a new {@link CollectionName} object from the given string.
+     *
+     * <p>The name must be a valid name, according to the {@link ValidName} class.
+     * If the name is not valid, an exception will be thrown with a message indicating the reason why it is invalid.
+     *
+     * @param name the name of the collection
+     * @return a new {@link CollectionName} object
+     * @throws RuntimeException if the name is not valid
+     */
     public static CollectionName of(String name) {
         ValidName nameValidity = ValidName.validate(name);
         if (!nameValidity.isValid) {
@@ -18,10 +29,21 @@ public class CollectionName {
         return new CollectionName(name);
     }
 
+    /**
+     * Returns a CollectionName of the given object.
+     *
+     * @param name The name to use for the collection
+     * @return A CollectionName of the given object.
+     */
     public static CollectionName of(Object name) {
         return of((String) name);
     }
 
+    /**
+     * Returns the name of the collection.
+     *
+     * @return the name of the collection
+     */
     public String getName() {
         return name;
     }
@@ -55,10 +77,21 @@ public class CollectionName {
             this.errorReason = errorReason;
         }
 
+        /**
+         * Checks if the name is valid and returns a ValidName object with the result of the validation.
+         *
+         * @return ValidName object that holds the result of the validation.
+         */
         private static ValidName valid() {
             return new ValidName(true, "");
         }
 
+        /**
+         * Returns a ValidName object with isValid set to false and a given reason for invalidity.
+         *
+         * @param reason The reason why the name is invalid.
+         * @return A ValidName object with isValid set to false.
+         */
         private static ValidName invalid(String reason) {
             return new ValidName(false, reason);
         }

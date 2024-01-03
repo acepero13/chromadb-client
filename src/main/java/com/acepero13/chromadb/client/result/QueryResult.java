@@ -32,7 +32,7 @@ public class QueryResult {
     }
 
     public List<Documents> getDocuments() {
-        return documents.stream().map(Documents::new).collect(Collectors.toList());
+        return documents.stream().map(Documents::of).collect(Collectors.toList());
     }
 
     public List<Embedding> getEmbeddings() {
@@ -62,7 +62,7 @@ public class QueryResult {
     }
 
     public List<Documents> getDocuments(DistanceRange range) {
-        return filter(documents, range).stream().map(Documents::new).collect(Collectors.toList());
+        return filter(documents, range).stream().map(Documents::of).collect(Collectors.toList());
     }
 
     public List<List<Metadata>> getMetadatas(DistanceRange range) {

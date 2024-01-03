@@ -35,6 +35,14 @@ public class DbClient {
         return collection;
     }
 
+    public Collection createCollection(String collectionName) throws ApiException {
+        return createCollection(CollectionName.of(collectionName));
+    }
+
+    public Collection createCollection(CollectionName collectionName) throws ApiException {
+        return createCollection(Collection.CreateParams.create(collectionName));
+    }
+
     private Collection fetch(CollectionName collectionName, EmbeddingFunction embeddingFunction) throws ApiException {
         LinkedTreeMap<String, Object> respCollection = (LinkedTreeMap<String, Object>) api.getCollection(collectionName.getName());
         CollectionName name = CollectionName.of(respCollection.get("name").toString());
@@ -102,4 +110,7 @@ public class DbClient {
             }
         });
     }
+
+
+
 }

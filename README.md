@@ -48,7 +48,7 @@ In this example the default embeddings function (_BAAI/bge-small-en-v1.5_) is us
 public class Main {
     public static void main(String[] args) {
         DbClient client = DbClient.create("http://localhost:8000");
-        Collection collection = client.createCollection(Collection.CreateParams.create(CollectionName.of("test-collection")));
+        Collection collection = client.createCollection("test-collection");
 
         collection.add(List.of("1", "2"), AddCriteria.builder()
                 .withDocuments("Hello, my name is John. I am a Data Scientist.", "Hello, my name is Bond. I am a Spy.")
