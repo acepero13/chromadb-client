@@ -38,6 +38,12 @@ class CollectionTest {
         when(mockEmbeddings.createEmbeddingsAsObject((Documents) any())).thenReturn(List.of(1.0f, 2.0f, 3.0f));
     }
 
+    @Test void testCollectionAttributes(){
+        assertEquals("name",collection.getNameAsString());
+        assertEquals(CollectionName.of("name"), collection.getName());
+        assertEquals("id", collection.getId());
+    }
+
     @Test
     void successAddsEmbeddingToCollection() throws ApiException {
 
@@ -265,6 +271,21 @@ class CollectionTest {
                 .whereDocument(Map.of("$contains", "text"))
                 .where(Map.of("key", Map.of("$eq", "value")))
                 .include(List.of(QueryEmbedding.IncludeEnum.DISTANCES, QueryEmbedding.IncludeEnum.METADATAS));
+
+        verify(mockApi).getNearestNeighbors(eq(expected), eq(COLLECTION_ID));
+    }
+
+    @Test
+    @DisplayName("Query elements")
+    void testQueryWithDefaultParameters() throws ApiException {
+
+        collection.query("Hello world");
+
+        QueryEmbedding expected = new QueryEmbedding();
+        expected.nResults(10)
+                .where(new HashMap<>())
+                .whereDocument(new HashMap<>())
+                .include(List.of(QueryEmbedding.IncludeEnum.DOCUMENTS, QueryEmbedding.IncludeEnum.METADATAS, QueryEmbedding.IncludeEnum.DISTANCES));
 
         verify(mockApi).getNearestNeighbors(eq(expected), eq(COLLECTION_ID));
     }

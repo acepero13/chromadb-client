@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers
-class DbClientTest {
+class DbClientIT {
     public static final int PORT = 8000;
 
     @Container
@@ -27,7 +27,7 @@ class DbClientTest {
             .withExposedPorts(PORT);
     private DbClient client;
 
-    DbClientTest() throws MalformedURLException {
+    DbClientIT() throws MalformedURLException {
     }
 
     @BeforeAll

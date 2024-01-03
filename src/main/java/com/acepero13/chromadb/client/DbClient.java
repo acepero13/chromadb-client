@@ -1,14 +1,11 @@
 package com.acepero13.chromadb.client;
 
-import com.google.gson.internal.LinkedTreeMap;
-import com.acepero13.chromadb.client.model.Collection;
-import com.acepero13.chromadb.client.model.CollectionName;
-import com.acepero13.chromadb.client.model.EmbeddingFunction;
-import com.acepero13.chromadb.client.model.Metadata;
 import com.acepero13.chromadb.client.handler.ApiClient;
 import com.acepero13.chromadb.client.handler.ApiException;
 import com.acepero13.chromadb.client.handler.DefaultApi;
-import com.acepero13.chromadb.client.model.UpdateCollection;
+import com.acepero13.chromadb.client.model.Collection;
+import com.acepero13.chromadb.client.model.*;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.math.BigDecimal;
 import java.net.URL;

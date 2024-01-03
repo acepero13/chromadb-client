@@ -222,6 +222,10 @@ public class Collection {
         return query(Collections.singletonList(texts), params);
     }
 
+    public QueryResponse<QueryResult> query(String ...texts) throws ApiException {
+        return query(List.of(texts), QueryCriteria.builder().build());
+    }
+
     /**
      * Queries the database with the given documents and parameters, returning the query result.
      *

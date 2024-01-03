@@ -22,7 +22,7 @@ public class TextEmbedding implements EmbeddingFunction {
     String DJL_PATH = "djl://ai.djl.huggingface.pytorch/";
 
     public TextEmbedding() {
-        this(Model.MINI_LM_L6_v2);
+        this(Model.BGE_SMALL_EN_v1_5);
     }
 
     public TextEmbedding(String modelPath) {

@@ -99,10 +99,6 @@ public class Conditions {
 
         }
 
-        @Override
-        public void or(DocumentMatcher matcher) {
-            conditions.add(matcher.buildMap());
-        }
     }
 
     private static class DocumentAndConditionImpl implements DocAndCondition {
@@ -111,14 +107,12 @@ public class Conditions {
         public DocumentAndConditionImpl(List<Map<String, Object>> conditions) {
             this.conditions = new ArrayList<>(conditions);
         }
+
         @Override
         public Map<String, Object> build() {
             return buildAndWith(conditions);
         }
-        @Override
-        public void and(DocumentMatcher matcher) {
-            conditions.add(matcher.buildMap());
-        }
+
     }
 
     private static class AndConditionImpl implements AndCondition {
@@ -132,10 +126,6 @@ public class Conditions {
             this(List.of(Map.of(field, metadataMatcher.buildMap())));
         }
 
-        @Override
-        public void and(String field, MetadataMatcher matcher) {
-            conditions.add(Map.of(field, matcher.buildMap()));
-        }
 
         @Override
         public Map<String, Object> build() {
@@ -152,11 +142,6 @@ public class Conditions {
 
         public OrConditionImpl(String field, MetadataMatcher metadataMatcher) {
             this(List.of(Map.of(field, metadataMatcher.buildMap())));
-        }
-
-        @Override
-        public void or(String field, MetadataMatcher matcher) {
-            conditions.add(Map.of(field, matcher.buildMap()));
         }
 
         @Override

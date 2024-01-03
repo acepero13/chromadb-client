@@ -49,5 +49,11 @@ class CollectionNameTest {
         assertEquals("name", name.toString());
     }
 
+    @Test void testHashCode(){
+        String name = "name";
+        Object objName = name;
+        assertEquals(CollectionName.of(objName).hashCode(), CollectionName.of(name).hashCode());
+    }
+
 
 }
