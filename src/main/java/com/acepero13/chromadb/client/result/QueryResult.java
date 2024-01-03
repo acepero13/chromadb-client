@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class QueryResult {
     public static final DistanceRange DEFAULT_RANGE = DistanceRange.between(-0.5f, 0.5f);
@@ -73,33 +74,42 @@ public class QueryResult {
     }
 
     private <T> List<List<T>> filter(List<List<T>> list, DistanceRange range) {
-        if (range == null) {
-            // If range is null, return the original list of ids
-            return list;
+        var filter = new ListFilter<T>(range, distances);
+        return filter.filterByDistanceRange(list);
+
+    }
+
+    private static class ListFilter<T> {
+        private final DistanceRange range;
+        private final List<List<Float>> distances;
+
+        private ListFilter(DistanceRange range, List<List<Float>> distances){
+            this.range = range;
+            this.distances = distances;
+        }
+        private List<List<T>> filterByDistanceRange(List<List<T>> list) {
+            if (!isValidRange()) {
+                return list;
+            }
+
+            return IntStream.range(0, distances.size())
+                    .mapToObj(i -> filterElements(list, distances.get(i), i, range))
+                    .filter(Predicate.not(List::isEmpty))
+                    .collect(Collectors.toList());
+
         }
 
-        List<List<T>> result = new ArrayList<>();
-        for (int i = 0; i < distances.size(); i++) {
-            List<Float> distanceList = distances.get(i);
-            List<T> elements = new ArrayList<>();
-
-            for (int j = 0; j < distanceList.size(); j++) {
-                float currentValue = distanceList.get(j);
-                if (range.inRange(currentValue)) {
-                    if (list.size() > i && list.get(i).size() > j) {
-                        elements.add(list.get(i).get(j));
-                    } else {
-                        // TODO: Log warning
-                    }
-                }
-            }
-            if (!elements.isEmpty()) {
-                result.add(elements);
-            }
+        private  List<T> filterElements(List<List<T>> list, List<Float> distanceList, int index, DistanceRange range) {
+            return IntStream.range(0, distanceList.size())
+                    .filter(j -> range.inRange(distanceList.get(j)))
+                    .filter(j -> list.size() > index && list.get(index).size() > j)
+                    .mapToObj(j -> list.get(index).get(j))
+                    .collect(Collectors.toList());
         }
 
-        return result;
-
+        private  boolean isValidRange() {
+            return range != null;
+        }
     }
 
 
