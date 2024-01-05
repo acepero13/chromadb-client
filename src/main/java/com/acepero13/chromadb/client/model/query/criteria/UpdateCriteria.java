@@ -2,7 +2,6 @@ package com.acepero13.chromadb.client.model.query.criteria;
 
 import com.acepero13.chromadb.client.model.*;
 import com.acepero13.chromadb.client.handler.ApiException;
-import com.acepero13.chromadb.client.model.UpdateEmbedding;
 
 import java.util.ArrayList;
 import java.util.Collections;

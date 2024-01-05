@@ -1,13 +1,11 @@
 package integration;
 
 import com.acepero13.chromadb.client.DbClient;
-import com.acepero13.chromadb.client.embeddings.minilm.TextEmbedding;
 import com.acepero13.chromadb.client.handler.ApiException;
 import com.acepero13.chromadb.client.model.Collection;
 import com.acepero13.chromadb.client.model.CollectionName;
 import com.acepero13.chromadb.client.model.Metadata;
 import com.acepero13.chromadb.client.model.query.criteria.AddCriteria;
-import com.acepero13.chromadb.client.model.query.criteria.QueryCriteria;
 import com.acepero13.chromadb.client.result.QueryResponse;
 import com.acepero13.chromadb.client.result.QueryResult;
 import org.junit.jupiter.api.AfterAll;
@@ -36,6 +34,7 @@ public class ExampleIT {
     ExampleIT() throws MalformedURLException {
 
     }
+
     @BeforeAll
     static void beforeAll() {
         chromaDBContainer.start();
@@ -53,13 +52,14 @@ public class ExampleIT {
         this.url = new URL("http://" + address + ":" + port);
     }
 
-    @Test void testMain() throws ApiException {
+    @Test
+    void testMain() throws ApiException {
         DbClient client = DbClient.create(url);
         Collection collection = client.createCollection("test-collection");
 
         collection.add(List.of("1", "2"), AddCriteria.builder()
-                        .withDocuments("Hello, my name is John. I am a Data Scientist.", "Hello, my name is Bond. I am a Spy.")
-                        .withMetadata(Metadata.of("type", "scientist"), Metadata.of("type", "spy"))
+                .withDocuments("Hello, my name is John. I am a Data Scientist.", "Hello, my name is Bond. I am a Spy.")
+                .withMetadata(Metadata.of("type", "scientist"), Metadata.of("type", "spy"))
                 .build());
 
         QueryResponse<QueryResult> response = collection.query("Who is the spy");
@@ -69,8 +69,8 @@ public class ExampleIT {
     }
 
 
-
-    @Test void testPotentialExample() throws ApiException {
+    @Test
+    void testPotentialExample() throws ApiException {
         DbClient client = DbClient.create(url);
         Collection collection = client.createCollection(CollectionName.of("qa-collection"));
 

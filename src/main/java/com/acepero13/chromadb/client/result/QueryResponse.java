@@ -88,7 +88,7 @@ public interface QueryResponse<T> {
         return !isSuccess();
     }
 
-    static class Success<T> implements QueryResponse<T> {
+    class Success<T> implements QueryResponse<T> {
         private final T payload;
 
         private Success(T payload) {

@@ -1,7 +1,6 @@
 package com.acepero13.chromadb.client.model.query.criteria;
 
 import com.acepero13.chromadb.client.model.EmbeddingFunction;
-import com.acepero13.chromadb.client.model.AddEmbedding;
 
 public interface CriteriaValidator<T> {
     ValidationResult isValid(T element, EmbeddingFunction embeddingsFunction);

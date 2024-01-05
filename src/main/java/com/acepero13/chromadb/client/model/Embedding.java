@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Embedding {
     private final List<Float> embedding;
@@ -43,6 +42,10 @@ public class Embedding {
         return embeddings.stream().map(Embedding::rawObject).collect(Collectors.toList());
     }
 
+    public static Embedding of(float ...vector) {
+        return new Embedding(vector);
+    }
+
 
     /**
      * Returns the raw embeddings of the words in the vocabulary.
@@ -60,5 +63,27 @@ public class Embedding {
      */
     public Object rawObject() {
         return embedding;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Embedding embedding1 = (Embedding) o;
+
+        return embedding.equals(embedding1.embedding);
+    }
+
+    @Override
+    public int hashCode() {
+        return embedding.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Embedding{" +
+                "embedding=" + embedding +
+                '}';
     }
 }

@@ -5,7 +5,6 @@ import com.acepero13.chromadb.client.model.*;
 import com.acepero13.chromadb.client.utils.IdGenerator;
 import com.acepero13.chromadb.client.utils.ListUtils;
 import com.acepero13.chromadb.client.handler.ApiException;
-import com.acepero13.chromadb.client.model.AddEmbedding;
 
 import java.util.*;
 import java.util.stream.Collectors;

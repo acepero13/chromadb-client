@@ -1,6 +1,5 @@
 package com.acepero13.chromadb.client.utils;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class StringUtils {

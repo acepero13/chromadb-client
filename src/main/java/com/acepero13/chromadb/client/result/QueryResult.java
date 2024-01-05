@@ -19,7 +19,7 @@ public class QueryResult {
     @SerializedName("documents")
     private List<List<String>> documents;
     @SerializedName("embeddings")
-    private List<List<Float>> embeddings = new ArrayList<>();
+    private final List<List<Float>> embeddings = new ArrayList<>();
     @SerializedName("ids")
     private List<List<String>> ids;
     @SerializedName("metadatas")

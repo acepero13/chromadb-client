@@ -1,6 +1,5 @@
 package com.acepero13.chromadb.client.embeddings.openai;
 
-import com.google.gson.Gson;
 import okhttp3.*;
 
 import java.io.IOException;

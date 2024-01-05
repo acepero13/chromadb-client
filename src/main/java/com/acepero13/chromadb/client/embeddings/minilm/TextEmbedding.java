@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 public class TextEmbedding implements EmbeddingFunction {
     private final String modelPath;
-    String DJL_PATH = "djl://ai.djl.huggingface.pytorch/";
+    final String DJL_PATH = "djl://ai.djl.huggingface.pytorch/";
 
     public TextEmbedding() {
         this(Model.BGE_SMALL_EN_v1_5);

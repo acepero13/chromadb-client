@@ -19,4 +19,8 @@ class DocumentsTest {
         assertTrue(Documents.of("Hello", "World").contains("World"));
     }
 
+    @Test void testHashCode(){
+        assertEquals(Documents.of("text").hashCode(), Documents.of("text").hashCode());
+    }
+
 }

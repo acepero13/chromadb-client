@@ -278,6 +278,15 @@ class CollectionTest {
 
     @Test
     @DisplayName("Query elements")
+    void queryDocuments() throws ApiException {
+
+        var res = collection.query(Documents.of("Hello world"));
+        assertTrue(res.isError());
+
+    }
+
+    @Test
+    @DisplayName("Query elements")
     void testQueryWithDefaultParameters() throws ApiException {
 
         collection.query("Hello world");
@@ -458,6 +467,13 @@ class CollectionTest {
         CreateCollection request = Collection.CreateParams.create(CollectionName.of("anotherName")).request();
 
         assertEquals(createDefaultCollection("anotherName"), request);
+    }
+
+    @Test void testCreateParams(){
+        FakeFunction embeddingFunction = new FakeFunction();
+        Collection.CreateParams params = Collection.CreateParams.create("name").withEmbeddingFunction(embeddingFunction);
+
+        assertEquals(embeddingFunction, params.embeddingsFunction());
     }
 
     private CreateCollection createDefaultCollection(String name) {

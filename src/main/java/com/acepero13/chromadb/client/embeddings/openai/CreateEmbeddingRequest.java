@@ -52,7 +52,7 @@ final class CreateEmbeddingRequest {
             return this;
         }
 
-        public CreateEmbeddingRequest build() {
+        CreateEmbeddingRequest build() {
             CreateEmbeddingRequest createEmbeddingRequest = new CreateEmbeddingRequest();
             createEmbeddingRequest.user = this.user;
             createEmbeddingRequest.input = this.input;
