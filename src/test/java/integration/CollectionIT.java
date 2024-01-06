@@ -83,7 +83,8 @@ public class CollectionIT {
     @Test
     void testDeleteAllEmbeddingsFromCollection() throws ApiException {
         addOneItemToCollection();
-        collection.delete();
+        QueryResponse<List<String>> deletedItems = collection.delete();
+        assertTrue(deletedItems.isSuccess());
         assertEquals(0, collection.count().payload().orElse(-1));
     }
 
@@ -123,10 +124,12 @@ public class CollectionIT {
     @Test
     void testUpsertCreatesNewItem() throws ApiException {
         addOneItemToCollection();
-        collection.upsert(List.of("newId"), AddCriteria.builder()
+        QueryResponse<Boolean> upsertResult = collection.upsert(List.of("newId"), AddCriteria.builder()
                 .withDocuments(Documents.single("This is a new document"))
                 .withEmbeddings(1.0f, 2.0f, 3.0f)
                 .build());
+
+        assertTrue(upsertResult.isSuccess());
 
         QueryResponse<GetResult> result = collection.getAll(res -> res.getDocuments().contains("This is a new document"));
 

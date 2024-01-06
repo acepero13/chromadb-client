@@ -2,7 +2,6 @@ package com.acepero13.chromadb.client.utils;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

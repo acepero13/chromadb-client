@@ -1,7 +1,5 @@
 package com.acepero13.chromadb.client.model;
 
-import com.acepero13.chromadb.client.model.QueryEmbedding;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
