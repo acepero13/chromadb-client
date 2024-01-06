@@ -29,6 +29,11 @@ public class Collection {
         this.embeddingsFunction = embeddingFunction;
     }
 
+    /**
+     * Retrieves the metadata of the collection.
+     *
+     * @return The metadata associated with this collection.
+     */
     public Metadata getMetadata() {
         return metadata;
     }
@@ -55,6 +60,17 @@ public class Collection {
      * @throws ApiException if an error occurs during the API call.
      */
     public QueryResponse<List<String>> add(AddCriteria params) throws ApiException {
+        AddCriteria newParams = getUpdatedParams(params);
+
+        AddEmbedding request = newParams.toRequest(new ArrayList<>(), embeddingsFunction);
+        QueryResponse<Boolean> result = QueryResponse.ofBoolean(this.api.add(request, this.collectionId));
+        if (result.isError()) {
+            return QueryResponse.failed("Failing adding new elements to collection." + result.error().toString());
+        }
+        return QueryResponse.ofList(request.getIds());
+    }
+
+    private static AddCriteria getUpdatedParams(AddCriteria params) {
         AddCriteria newParams;
         if (params.doesNotHaveIdGenerator()) {
             newParams = AddCriteria.builder(params)
@@ -63,13 +79,7 @@ public class Collection {
         } else {
             newParams = params;
         }
-
-        AddEmbedding request = newParams.toRequest(new ArrayList<>(), embeddingsFunction);
-        QueryResponse<Boolean> result = QueryResponse.ofBoolean(this.api.add(request, this.collectionId));
-        if(result.isError()) {
-            return QueryResponse.failed("Failing adding new elements to collection." + result.error().toString());
-        }
-        return QueryResponse.ofList(request.getIds());
+        return newParams;
     }
 
     /**
@@ -124,6 +134,14 @@ public class Collection {
         return QueryResponse.ofNullable(this.api.update(params.toRequest(ids, embeddingsFunction), collectionId));
     }
 
+    /**
+     * Inserts or updates documents in the collection based on provided criteria.
+     *
+     * @param ids    The IDs of the documents to upsert.
+     * @param params The criteria used for upserting documents.
+     * @return A QueryResponse object indicating the success or failure of the operation.
+     * @throws ApiException if the API call fails.
+     */
     public QueryResponse<Boolean> upsert(List<String> ids, AddCriteria params) throws ApiException {
         return QueryResponse.ofNullable(this.api.upsert(params.toRequest(ids, embeddingsFunction), collectionId));
 
@@ -138,11 +156,12 @@ public class Collection {
      * @throws ApiException if there was an error during the API request.
      */
     public QueryResponse<QueryResult> query(List<String> texts, QueryCriteria params) throws ApiException {
-        QueryEmbedding req = new QueryEmbedding();
-        req.where(params.whereMetadata());
-        req.whereDocument(params.whereDocument());
-        req.include(params.include());
-        req.nResults(params.nResults());
+        QueryEmbedding req = new QueryEmbedding()
+                .where(params.whereMetadata())
+                .whereDocument(params.whereDocument())
+                .include(params.include())
+                .nResults(params.nResults());
+
         List<Object> embeddings = params.hasEmbeddings()
                 ? params.embeddings()
                 : embeddingsFunction.createEmbeddingsAsObject(texts);
@@ -217,7 +236,7 @@ public class Collection {
         return query(Collections.singletonList(texts), params);
     }
 
-    public QueryResponse<QueryResult> query(String ...texts) throws ApiException {
+    public QueryResponse<QueryResult> query(String... texts) throws ApiException {
         return query(List.of(texts), QueryCriteria.builder().build());
     }
 

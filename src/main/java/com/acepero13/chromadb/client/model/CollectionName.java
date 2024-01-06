@@ -3,6 +3,10 @@ package com.acepero13.chromadb.client.model;
 
 import com.acepero13.chromadb.client.utils.StringUtils;
 
+/**
+ * Represents a valid name for a collection.
+ * This class encapsulates the logic for validating and storing a collection name.
+ */
 public class CollectionName {
     private final String name;
 
@@ -48,6 +52,11 @@ public class CollectionName {
         return name;
     }
 
+    /**
+     * Returns a string representation of the collection name.
+     *
+     * @return The collection name as a string.
+     */
     @Override
     public String toString() {
         return name;
@@ -96,11 +105,16 @@ public class CollectionName {
             return new ValidName(false, reason);
         }
 
+
         /**
-         * The length of the name must be between 3 and 63 characters.
-         * The name must start and end with a lowercase letter or a digit, and it can contain dots, dashes, and underscores in between.
-         * The name must not contain two consecutive dots.
-         * The name must not be a valid IP address.
+         * Validates the given collection name against predefined criteria.
+         * <p>
+         * The name must be between 3 and 63 characters, start and end with a lowercase letter or a digit,
+         * and can only contain lowercase letters, digits, dots, dashes, and underscores.
+         * It must not contain consecutive dots or represent a valid IP address.
+         *
+         * @param name The collection name to validate.
+         * @return A ValidName instance representing the validity of the name and the reason if invalid.
          */
 
         private static ValidName validate(String name) {
